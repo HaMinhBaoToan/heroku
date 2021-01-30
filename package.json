@@ -4,7 +4,7 @@
   "description": "nhom-05",
   "main": "index.js",
   "scripts": {
-    "start-client": "cd frontend && react-scripts start",
+    "start-client": "cd frontend && npm start",
     "start": "cd backend && npm start",
     "build": "(cd frontend && react-scripts build) && (cd backend && npm install)"
   },
