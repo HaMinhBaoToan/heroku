@@ -1,24 +1,52 @@
 {
-  "name": "quan-ly-quy-trinh-pham-mem",
-  "version": "1.0.0",
-  "description": "nhom-05",
-  "main": "index.js",
-  "scripts": {
-    "start-client": "cd frontend && npm start",
-    "start": "cd backend && npm start",
-    "build": "(cd frontend && npm install && react-scripts build) && (cd backend && npm install)"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/1660626/QLQTPM.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/1660626/QLQTPM/issues"
-  },
-  "homepage": "https://github.com/1660626/QLQTPM#readme",
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "concurrently": "^5.3.0"
+    "@ant-design/icons": "^4.4.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.2",
+    "antd": "^4.11.2",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "dateformat": "^4.5.0",
+    "lodash": "^4.17.20",
+    "npm": "^6.14.11",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.1.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "recharts": "^2.0.3",
+    "web-vitals": "^1.1.0"
+  },
+  "scripts": {
+    "start-client": "react-scripts npm start",
+    "start": "cd backend && npm start",
+    "build": "react-scripts build build && (cd backend && npm install)",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
