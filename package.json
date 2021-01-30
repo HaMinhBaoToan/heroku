@@ -1,45 +1,24 @@
 {
-  "name": "github-jobs-react-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "0.19.2",
-    "bootstrap": "4.5.0",
-    "lodash": "4.17.15",
-    "moment": "2.27.0",
-    "node-sass": "4.14.1",
-    "prop-types": "15.7.2",
-    "react": "^16.13.1",
-    "react-bootstrap": "1.0.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "7.2.0",
-    "react-scripts": "3.4.1",
-    "redux": "4.0.5",
-    "redux-thunk": "2.3.0"
-  },
+  "name": "quan-ly-quy-trinh-pham-mem",
+  "version": "1.0.0",
+  "description": "nhom-05",
+  "main": "index.js",
   "scripts": {
-    "start-client": "react-scripts start",
-  "build": "react-scripts build && (cd server && npm install)",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject",
-  "start": "cd server && npm start"
+    "start-client": "cd frontend && react-scripts start",
+    "start": "cd backend && npm start",
+    "build": "(cd frontend && react-scripts build) && (cd backend && npm install)"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1660626/QLQTPM.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1660626/QLQTPM/issues"
+  },
+  "homepage": "https://github.com/1660626/QLQTPM#readme",
+  "dependencies": {
+    "concurrently": "^5.3.0"
   }
 }

@@ -1,0 +1,18 @@
+.card {
+  margin: '1rem';
+  border-radius: 16px;
+  border: unset;
+  color: white;
+
+  .ant-card-body {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  h2, h5{
+    color: white;
+  }
+  .ant-card-body{
+    text-align: center
+  }
+}
