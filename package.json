@@ -6,7 +6,7 @@
   "scripts": {
     "start-client": "cd frontend && npm start",
     "start": "cd backend && npm start",
-    "build": "(cd frontend && react-scripts build) && (cd backend && npm install)"
+    "build": "(cd frontend && npm install && react-scripts build) && (cd backend && npm install)"
   },
   "repository": {
     "type": "git",
