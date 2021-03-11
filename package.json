@@ -2,7 +2,7 @@
   "name": "onlineacademy",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./frontend/src/index.js",
   "scripts": {
     "postinstall": "concurrently \"cd backend && npm install\" \"cd frontend && npm install \"",
     "start": "concurrently \"cd backend && npm start\" \"cd frontend  && npm start\"",
