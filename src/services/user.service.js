@@ -6,7 +6,7 @@ export default function UserService() {
   const tokenString = localStorage.getItem("AcademyOnline_Token");
   const accessToken = localparseJson(tokenString).accessToken;
 
-  const API_URL = " /api/users";
+  const API_URL = "/api/users";
 
   const getUserByID = (id) => {
     return axios.get(`${API_URL}/${id}`, { headers: authHeader(accessToken) });

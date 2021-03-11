@@ -12,7 +12,7 @@ const Homepage = () => {
   const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-    let url = " /api/home/showCategory";
+    let url = "/api/home/showCategory";
     axios.get(url).then((res) => {
         setCategories(res.data);
     })
