@@ -23,3 +23,9 @@
       - backend localhost: 4000
 - note: để chạy riêng client: tại ./frontend : npm start
 - note: để chạy riêng server: tại ./backend : npm start
+
+ "start-client": "cd frontend  && npm start",
+    "postinstall": "concurrently \"cd backend && npm install\" \"cd frontend && npm install \"",
+    "start": "cd backend && npm start",
+    "bulid": "concurrently \"cd backend && npm start\" \"cd frontend  && npm build\"",
+    "test": "echo \"Error: no test specified\" && exit 1"

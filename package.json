@@ -2,27 +2,40 @@
   "name": "onlineacademy",
   "version": "1.0.0",
   "description": "",
-  "main": "./frontend/src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start-client": "cd frontend  && npm start",
-    "postinstall": "concurrently \"cd backend && npm install\" \"cd frontend && npm install \"",
-    "start": "cd backend && npm start",
-    "bulid": "concurrently \"cd backend && npm start\" \"cd frontend  && npm build\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start client",
+    "server": "nodemon index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/19424033/OnlineAcademy.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/19424033/OnlineAcademy/issues"
-  },
-  "homepage": "https://github.com/19424033/OnlineAcademy#readme",
   "dependencies": {
+    "ajv": "^7.0.2",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "chai-http": "^4.3.0",
+    "cloudinary": "^1.24.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "image-to-base64": "^2.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.12",
+    "mocha": "^8.2.1",
+    "moment": "^2.29.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.4.17",
+    "randomstring": "^1.1.5",
+    "supertest": "^6.0.1"
+  },
+  "devDependencies": {
     "concurrently": "^5.3.0",
-    "react-html-parser": "^2.0.2",
-    "sweetalert2": "^10.15.5"
+    "chai": "^4.2.0",
+    "nodemon": "^2.0.6"
   }
 }
