@@ -17,12 +17,12 @@ const HOME = require('./server/router/home.route');
 const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
 // const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
-
+const buildPath = path.join(__dirname, '..', 'build');
 if(process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined')); 
 }
 
-
+app.use(express.static(buildPath));
 app.use(cors());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
