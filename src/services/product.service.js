@@ -6,7 +6,7 @@ export default function UserService() {
   const tokenString = localStorage.getItem("AcademyOnline_Token");
   const accessToken = localparseJson(tokenString).accessToken;
 
-  const API_URL = "http://localhost:4000/api/product";
+  const API_URL = " /api/product";
 
 
   const getAllProduct = () => {

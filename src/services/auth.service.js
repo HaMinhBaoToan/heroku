@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default function AuthService() {
-  const API_auth = "http://localhost:4000/api/auth";
+  const API_auth = " /api/auth";
 
   const register = (velues) => {
     return axios.post(`${API_auth}/register`, velues);
