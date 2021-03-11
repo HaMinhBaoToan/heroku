@@ -1,0 +1,163 @@
+body {
+  background-color: #f0f2f5 !important;
+}
+* {
+  font-family: Arial, sans-serif;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  -o-user-select: none;
+  user-select: none;
+}
+
+// .abc123 {
+//   float: right;
+// }
+
+// .site-layout-background {
+//   background: #fff;
+// }
+
+// .ant-layout {
+//   .ant-layout-content {
+//   }
+//   .header {
+//     position: fixed;
+//     width: 100%;
+//     height: auto;
+//     top: 0;
+//     left: 0;
+//     z-index: 9999;
+//     background-color: #000;
+//     transition: all ease 0.3s;
+//     box-shadow: 0 0 15px #d1d1d1;
+//     padding: 0;
+//     .header_top {
+//       padding: 0 200px;
+//       display: block;
+//       width: 100%;
+//       background-image: linear-gradient(to right, #df322f, #f76e25);
+//       height: 30px;
+//       .menu_top {
+//         float: right;
+//         margin: 0;
+//         padding: 0;
+//         li {
+//           line-height: 30px;
+//           margin-left: 30px;
+//           list-style: none;
+//           font-size: 12px;
+//           font-weight: 600;
+//           letter-spacing: -0.2px;
+//           float: left;
+//           a {
+//             color: #fff;
+//             text-decoration: none;
+//             &:hover {
+//               color: $black;
+//             }
+//           }
+//         }
+//       }
+//     }
+//     .header_main {
+//       padding: 0 200px;
+//       .header_main_logo {
+//         .logo {
+//           float: left;
+//           width: 200px;
+//           height: auto;
+//           margin: 10px 24px 10px 0;
+//         }
+//       }
+//       .header_main_search {
+//         height: 100%;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         .ant-input-search {
+//           .ant-input-group {
+//             .ant-input {
+//               border-color: rgb(223, 50, 47) !important;
+
+//               &:focus {
+//                 outline: none !important;
+//                 box-shadow: none !important;
+//                 border-color: rgb(223, 50, 47) !important;
+//               }
+//               &:hover {
+//                 border-color: rgb(223, 50, 47) !important;
+//               }
+//             }
+//             .ant-input-group-addon {
+//               .ant-btn {
+//                 background-color: #df322f;
+//                 border-color: rgb(223, 50, 47) !important;
+//                 .anticon-search {
+//                   color: $white;
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//       .header_main_button {
+//         height: 100%;
+//         display: flex;
+//         justify-content: space-evenly;
+//         align-items: center;
+//         .ant-btn {
+//           color: $black;
+//           background: $white !important;
+//           border-color: $white !important;
+//           text-shadow: none !important;
+//           box-shadow: none !important;
+//           .anticon {
+//             font-size: 24px;
+//           }
+//         }
+//       }
+//       .header_main_user {
+//         height: 100%;
+//         display: flex;
+//         justify-content: flex-end;
+//         align-items: center;
+//         .btn_academy {
+//           height: 36px;
+//           font-weight: 600;
+//           letter-spacing: 0.2px;
+//           border-radius: 10px;
+//         }
+//         .btn_dangnhap {
+//           // margin-right: 20px;
+//         }
+//         .btn_dangky {
+//           &:hover {
+//             color: $white;
+//             background: $red_light;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+.ant-dropdown{
+  z-index: 9999999 !important;
+}
+
+// Large devices (desktops, 992px and up)
+@media only screen and (min-width: 992px) {
+ 
+ 
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media only screen and (min-width: 1200px) {
+  
+}
+
+.otpInput{
+  float: left;
+}
