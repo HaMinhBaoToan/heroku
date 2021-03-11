@@ -4,19 +4,22 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 
-const PRODUCTS = require('./server/router/products.route');
-const ORDERS = require('./server/router/orders.route');
-const DASHBOARD = require('./server/router/dashboard.route');
-const ORDER_DETAIL = require('./server/router/order-detail.route');
-const USEDS = require('./server/router/useds.route');
-const GOODS = require('./server/router/goods.route');
-const BASE64IMAGE = require('./server/router/base64Image.route');
-const CATEGORIES = require('./server/router/categories.route');
+const USERS = require('./server/router/users.route');
+const CATEGORYGROUP = require('./server/router/categorygroup.route');
+const CATEGORY = require('./server/router/category.route');
+const COURSES = require('./server/router/courses.route');
+const PRODUCT = require('./server/router/product.route');
+
+const AUTH = require('./server/router/auth.route');
+const HOME = require('./server/router/home.route');
+
+
+const decentralization =require('./server/middlewares/auth.mdw'); // phân quyền
+// const { cloudinary } = require('./server/utils/cloudinary');
 const PORT = process.env.PORT || 4000;
 
 if(process.env.NODE_ENV !== 'test') {
-  //use morgan to log at command line
-  app.use(morgan('combined')); //'combined' outputs the Apache style LOGs
+  app.use(morgan('combined')); 
 }
 
 
@@ -33,15 +36,29 @@ app.get("/", (request, respond) => {
   });
 });
 
-app.use('/api/products', PRODUCTS );
-app.use('/api/orders', ORDERS );
-app.use('/api/dashboard', DASHBOARD );
-app.use('/api/order-detail', ORDER_DETAIL );
-app.use('/api/goods', GOODS );
-app.use('/api/useds', USEDS );
-app.use('/api/base64Image', BASE64IMAGE );
-app.use('/api/categories', CATEGORIES );
+// app.get('/api/images', async (req, res) => {
+//   const { resources } = await cloudinary.search
+//       // .expression('folder:After_Effects_CC_Masterclass')
+//       // .expression('folder: Complete_Javascript_Course_for_Beginners_with_jQuery_AJAX')
+//       .expression('folder: Illustrator_CC_2018_Fundamentals_For_Beginners')
+//       // .expression('folder: React_basic_in_just_1_hour')
+//       .sort_by('public_id', 'asc')
+//       .execute();
 
+//   const publicIds = resources.map((file) => file.public_id);
+//   res.send(resources);
+// });
+
+app.use('/api/users',decentralization, USERS );
+app.use('/api/categorygroup',decentralization, CATEGORYGROUP );
+app.use('/api/category',decentralization, CATEGORY );
+app.use('/api/product',decentralization, PRODUCT );
+
+app.use('/api/courses', COURSES );
+
+app.use('/api/auth', AUTH );
+
+app.use('/api/home', HOME);
 
 
 app.get('/err', function (req, res) {
