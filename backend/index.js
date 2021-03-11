@@ -22,7 +22,8 @@ if(process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined')); 
 }
 
-
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
 app.use(cors());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
