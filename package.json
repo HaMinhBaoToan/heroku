@@ -1,11 +1,11 @@
 {
-  "name": "github-jobs-react-app",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.0",
     "antd": "^4.9.4",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
@@ -21,18 +21,15 @@
     "react-dom": "^17.0.1",
     "react-draft-wysiwyg": "^1.14.5",
     "react-google-login": "^5.2.2",
-    "react-html-parser": "^2.0.2",
     "react-icons": "^4.1.0",
     "react-multi-carousel": "^2.6.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
-    "sweetalert2": "^10.15.5",
     "video-react": "^0.14.1",
-    "web-vitals": "^0.2.4"
-  },
-  "devDependencies": {
-    "node-sass": "^4.14.1"
+    "web-vitals": "^0.2.4",
+    "react-html-parser": "^2.0.2",
+    "sweetalert2": "^10.15.5"
   },
   "scripts": {
     "start-client": "react-scripts start",
@@ -42,7 +39,13 @@
     "start": "cd server && npm start"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1"
   },
   "browserslist": {
     "production": [

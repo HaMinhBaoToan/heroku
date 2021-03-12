@@ -22,12 +22,12 @@ const Courses = () => {
  
 
     useEffect(() => {
-        axios.get(`/api/courses/categorygroup`)
+        axios.get(`http://localhost:4000/api/courses/categorygroup`)
         .then((response) => {
             setCategoryGroup(response.data);
         });
 
-        axios.get(`/api/home/showCategory`)
+        axios.get(`http://localhost:4000/api/home/showCategory`)
         .then((response) => {
             if(CategoryGroup === undefined) {
                 console.log(0);
