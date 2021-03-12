@@ -24,7 +24,7 @@ const Detail = (props) => {
         else {
             console.log(product);
             if(productView.indexOf(product.CategoryId) < 0 ) {
-                axios.put(`http://localhost:4000/api/courses/products/${ product.CategoryId }/${ product.Viewer + 1}`)
+                axios.put(`/api/courses/products/${ product.CategoryId }/${ product.Viewer + 1}`)
                 .then((response) => {
                     productView.push(product.CategoryId);
                })  
