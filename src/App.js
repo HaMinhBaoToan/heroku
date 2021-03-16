@@ -8,7 +8,7 @@ import {
 
 import "antd/dist/antd.css";
 import "./assets/global.scss";
-
+import 'antd-button-color/dist/css/style.css';
 import AppRoute from "./AppRoute";
 
 //page

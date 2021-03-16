@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "antd": "^4.9.4",
+    "antd-button-color": "^1.0.4",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "cloudinary-react": "^1.7.0",
@@ -21,22 +22,22 @@
     "react-dom": "^17.0.1",
     "react-draft-wysiwyg": "^1.14.5",
     "react-google-login": "^5.2.2",
+    "react-html-parser": "^2.0.2",
     "react-icons": "^4.1.0",
     "react-multi-carousel": "^2.6.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
+    "sweetalert2": "^10.15.5",
     "video-react": "^0.14.1",
     "web-vitals": "^0.2.4",
-    "react-html-parser": "^2.0.2",
-    "sweetalert2": "^10.15.5"
+    "yup": "^0.32.9"
   },
   "scripts": {
-    "start-client": "react-scripts start",
-    "build": "react-scripts build && (cd server && npm install)",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "cd server && npm start"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

@@ -10,7 +10,9 @@ body {
   -o-user-select: none;
   user-select: none;
 }
-
+.ant-notification-notice{
+  z-index: 1000000;
+}
 // .abc123 {
 //   float: right;
 // }

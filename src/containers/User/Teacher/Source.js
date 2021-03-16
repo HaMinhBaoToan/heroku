@@ -1,12 +1,41 @@
-import { List, Rate, Button, notification, Typography } from "antd";
+import { List, Rate, Button, notification, Typography, Modal } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+
 import { formatMoney } from "../../../utils/utils";
+import CategoryService from "../../../services/category.service";
+
 const { Text } = Typography;
+const { confirm } = Modal;
 
-const Source = ({ datasource }) => {
+const Source = ({ datasource, APIgetCategoryByUserID }) => {
   console.log(datasource);
-
+  const deleteCategory = (category) => {
+    confirm({
+      title: `Bạn có chắc muốn xoá BÀI: ${category.CategoryName} ?`,
+      icon: <ExclamationCircleOutlined />,
+      okText: "Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk() {
+        CategoryService()
+          .deleteSingleCatagory(category.CategoryId)
+          .then((response) => {
+            APIgetCategoryByUserID();
+            notification["success"]({
+              message: "Hoàn Tất",
+              description: "bạn đã xoá thành công",
+              placement: "bottomRight",
+            });
+          })
+          .catch(function (error) {
+            console.log("ERROR from server:", error);
+          });
+      },
+      onCancel() {},
+    });
+  };
   return (
     <List
       itemLayout="vertical"
@@ -31,17 +60,16 @@ const Source = ({ datasource }) => {
                 >
                   {item.CategoryName}
                 </Link>
-                
               </h4>
               {item.Completed ? (
-                  <Text type="success" className="h4">
-                    Hoàn Tất
-                  </Text>
-                ) : (
-                  <Text type="warning" className="h4">
-                    Chưa Hoàn Tất
-                  </Text>
-                )}
+                <Text type="success" className="h4">
+                  Hoàn Tất
+                </Text>
+              ) : (
+                <Text type="warning" className="h4">
+                  Chưa Hoàn Tất
+                </Text>
+              )}
             </div>
             <div className="card-courses-list-bx">
               <ul className="card-courses-view">
@@ -77,10 +105,18 @@ const Source = ({ datasource }) => {
                 <h6 className="m-b10">Course Description</h6>
                 <p>{item.Note}</p>
               </div>
-              {/* <div className="col-md-12">
-                                <a href="#" className="btn green radius-xl outline">Approve</a>
-                                <a href="#" className="btn red outline radius-xl ">Cancel</a>
-                            </div> */}
+
+              <div className="col-md-12 text-right">
+                <Button
+                  shape="round"
+                  type="danger"
+                  onClick={() => {
+                    deleteCategory(item);
+                  }}
+                >
+                  Xóa Khóa học
+                </Button>
+              </div>
             </div>
           </div>
         </div>

@@ -19,6 +19,24 @@ const someFunction = (myArray) => {
   return Promise.all(promises);
 };
 
+router.post("/", async function (req, res) {
+  const addCategory = req.body;
+  // console.log(addCategory)
+  if (req.body.Image) {
+    console.log("image");
+    var resual;
+    cloudinary.uploader.upload(addCategory.Image, async function (err, res) {
+      addCategory.Image = res.url;
+      resual = await categoryModel.add(addCategory);
+    });
+    res.status(200).json(resual);
+  } else {
+    console.log("no img");
+    const resual = await categoryModel.add(addCategory);
+    res.status(200).json(resual);
+  }
+});
+
 router.get("/", async function (req, res) {
   const list = await categoryModel.allAdmin();
   if (list.length !== 0) {
@@ -54,17 +72,31 @@ router.put("/:id", async function (req, res) {
   if (values.Image) {
     if (values.Change === false) {
     } else {
-      cloudinary.uploader.upload(values.Image, function (err, res) {
-        values.Image = res.url;
+      cloudinary.uploader.upload(values.Image, async function (err, res1) {
+        values.Image = res1.url;
+        delete values.Change;
+        await categoryModel.update(id, values);
+        res.status(200).json({
+          message: "update success",
+        });
       });
     }
   } else {
   }
-  delete values.Change;
-  await categoryModel.update(id, values);
-  res.status(200).json({
-    message: "update success",
-  });
 });
+router.delete("/:id", async function (req, res) {
+  const id = req.params.id || 0;
+  if (id === 0) {
+    return res.status(304).end();
+  }
 
+  await categoryModel
+    .del(id)
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+});
 module.exports = router;

@@ -9,7 +9,7 @@ const formatNumber = (number = 0) => {
   return parseInt(number)?.toLocaleString();
 };
 const formatMoney = (number = 0) => {
-  return parseInt(number)?.toLocaleString()+ " đ";
+  return parseInt(number)?.toLocaleString() + " đ";
 };
 
 const parseJwt = (token) => {
@@ -49,7 +49,17 @@ const parseAccessToken_res = (data) => {
   if (data) return parseJwt(data.accessToken);
   else return "";
 };
+const changeTailURL = (URL) => {
+  var URL_ = URL.split(".");
+  URL_[URL_.length - 1] = "jpeg";
+  return (URL_ = URL_.join("."));
+};
 
+const parseForm = (values) => {
+  let formData = new FormData();
+  for (const key in values) formData.append(key, values[key]);
+  return formData;
+};
 export {
   formatDate,
   formatNumber,
@@ -58,5 +68,7 @@ export {
   getAccessToken,
   parseAccessToken,
   parseAccessToken_res,
-  formatMoney
+  formatMoney,
+  changeTailURL,
+  parseForm,
 };

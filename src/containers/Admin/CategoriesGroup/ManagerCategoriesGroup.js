@@ -180,7 +180,7 @@ const ManagetUser = () => {
         <Col span={12}>
           <Button
             className="float-right btn btn-info"
-            type="primary"
+            type="success"
             onClick={() => {
               setVisible(true);
             }}
@@ -201,7 +201,7 @@ const ManagetUser = () => {
                 <div className="info-bx text-center">
                   <h4><Link to="#">{item.CategoryGroupName}</Link></h4>
                   {/* <Link to="#" className="btn radius-xl">View More</Link> */}
-                  <Button type="primary" shape="round"
+                  <Button type="warning"  shape="round"
                     onClick={() => {
                       setVisibleModalEdit(true);
                       setcategoryGroupEditModal(item);

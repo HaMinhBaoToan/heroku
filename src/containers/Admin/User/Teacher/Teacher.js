@@ -248,7 +248,7 @@ const Teacher = () => {
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
     axios
-      .post("/api/users/teacher", values, {
+      .post("http://localhost:4000/api/users/teacher", values, {
         headers: {
           "x-access-token": localparseJson(
             localStorage.getItem("AcademyOnline_Token")
@@ -293,7 +293,7 @@ const Teacher = () => {
         <Col span={12}>
           <Button
             className="float-right"
-            type="primary"
+            type="success"
             onClick={() => {
               setVisible(true);
             }}

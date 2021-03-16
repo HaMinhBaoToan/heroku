@@ -6,16 +6,19 @@ import {
   useParams,
   Link,
 } from "react-router-dom";
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Button, notification } from "antd";
 import CategoryService from "../../../services/category.service";
 import { AppContext } from "../../../utils/AppContext";
 import Source from "./Source";
-import Detail from "./Category_Detail/Detail";
+import ModalAddCategory from "./ModalAddCategory";
+
 const Courses = () => {
   const { userid } = useContext(AppContext);
 
-  let { CategoryId } = useParams();
   const [datasource, setdatasource] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const APIgetCategoryByUserID = () => {
     CategoryService()
       .getCatagorybyUserID(userid)
@@ -26,6 +29,39 @@ const Courses = () => {
         },
         (error) => {}
       );
+  };
+
+  const onEdit = (values) => {
+    setLoading(true);
+    values.TeacherID = userid;
+    console.log(values);
+    if (values.Image) {
+      setTimeout(() => {
+        CategoryService()
+          .addCategory(values)
+          .then((res) => {
+            if (res.data) {
+              setVisible(false);
+              setLoading(false);
+              APIgetCategoryByUserID();
+            }
+          })
+          .catch((err) => {});
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        CategoryService()
+          .addCategory(values)
+          .then((res) => {
+            if (res.data) {
+              setVisible(false);
+              setLoading(false);
+              APIgetCategoryByUserID();
+            }
+          })
+          .catch((err) => {});
+      }, 2000);
+    }
   };
   useEffect(() => {
     APIgetCategoryByUserID();
@@ -41,16 +77,12 @@ const Courses = () => {
                   <div className="profile-tabnav">
                     <ul className="nav nav-tabs">
                       <li className="nav-item">
-                        <Link
-                          className="nav-link active"
-                          data-toggle="tab"
-                          //   onClick={() => setRender("FavorCourse")}
-                        >
+                        <Link className="nav-link active" data-toggle="tab">
                           <i className="ti-book"></i>
                           Quản Lý Khóa Học
                         </Link>
                       </li>
-                      <li className="nav-item">
+                      {/* <li className="nav-item">
                         <Link
                           className="nav-link "
                           data-toggle="tab"
@@ -59,7 +91,7 @@ const Courses = () => {
                           <i className="ti-bookmark-alt"></i>
                           Quản Lý Video Khóa Học
                         </Link>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
                 </div>
@@ -74,8 +106,19 @@ const Courses = () => {
                 <div className="profile-content-bx">
                   <div className="tab-content">
                     <>
-                      <div class="profile-head">
-                        <h3> Quản Lý Khóa Học</h3>
+                      <div class="profile-head row">
+                        <h3 className="col-9"> Quản Lý Khóa Học</h3>
+                        <div className="col-3 text-right">
+                          <Button
+                            type="success"
+                            shape="round"
+                            onClick={() => {
+                              setVisible(true);
+                            }}
+                          >
+                            + Thêm Khóa Học
+                          </Button>
+                        </div>
                       </div>
                       <div class="edit-profile">
                         <Source
@@ -91,6 +134,14 @@ const Courses = () => {
           </div>
         </div>
       </div>
+      <ModalAddCategory
+        visible={visible}
+        onEdit={onEdit}
+        loading={loading}
+        onCancel={() => {
+          setVisible(false);
+        }}
+      />
     </div>
   );
 };
