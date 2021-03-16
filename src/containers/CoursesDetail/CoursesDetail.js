@@ -21,7 +21,7 @@ const CoursesDetail = () => {
     const id = CategoryId.split("-",1);
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/courses/category/${id}/${userid}`)
+        axios.get(`/api/courses/category/${id}/${userid}`)
         .then((response) => {
           setCategories(response.data[0]);
           setProducts(response.data);
