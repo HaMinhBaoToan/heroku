@@ -29,7 +29,7 @@ const CoursesList = (props) => {
 
     const handleClickUnlike = (CategoryId) => {
         const values = {
-            UsersId: props.userid,
+            UsersId: props.unlikeUserId,
             CategoryId: CategoryId,
             LikeTime: dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss"),
             IsActive: false

@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   //Route,
-  //Redirect,
+  Redirect,
 } from "react-router-dom";
 
 import "antd/dist/antd.css";
@@ -180,8 +180,8 @@ const App = () => {
               </>
             )}
 
-            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" /> */}
+            {/* <AppRoute path="/error" layout={Default} component={Error} exact /> */}
+            <Redirect to="/" />
           </Switch>
         </Router>
       </AppContext.Provider>
@@ -247,8 +247,8 @@ const App = () => {
               exact
             />
             {/* <AppRoute layout={Default} component={Error} exact /> */}
-            {/* <AppRoute path="/error" layout={Default} component={Error} exact />
-            <Redirect to="/error" /> */}
+            {/* <AppRoute path="/error" layout={Default} component={Error} exact /> */}
+            <Redirect to="/" />
           </Switch>
         </Router>
       </AppContext.Provider>

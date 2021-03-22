@@ -31,7 +31,7 @@ const FavorCourse = () => {
           ) : (
             <div className="row" >
               <div className="col-lg-10 col-md-12 col-sm-8" style={{margin:'0px auto'}}>
-                <CoursesList userid = { userid } categories = {favoriteCategory} />
+                <CoursesList unlikeUserId = { userid } categories = {favoriteCategory} />
               </div>
             </div>
           )}

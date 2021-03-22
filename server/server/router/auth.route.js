@@ -170,13 +170,13 @@ router.post("/register-with-google", async function (req, res) {
     user_register.isActive = 1;
     user_register.Point = 0;
 
-    await imageToBase64(user_register.Image) // Image URL
-      .then((response) => {
-        user_register.Image = response;
-      })
-      .catch((error) => {
-        console.log(error); // Logs an error if there was one
-      });
+    // await imageToBase64(user_register.Image) // Image URL
+    //   .then((response) => {
+    //     user_register.Image = response;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error); // Logs an error if there was one
+    //   });
     user_register.Userid = await userModel.add(user_register);
 
     mailer(user_register.Email, user_register.OTP);

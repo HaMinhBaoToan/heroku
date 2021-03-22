@@ -17,12 +17,12 @@ const CommentCourses = (props) => {
   const [data, setData] = useState([]);
   const [valueText, setValueText] = useState('');
   const [valueRate, setValueRate] = useState(0);
-  const [hide, setHide] = useState(0);
+  const [hide, setHide] = useState(props.categories.IsCmt);
+  const [rateValue, setRateValue] = useState(props.categories.RateValue);
 
   useEffect(() => {
     CoursesServices().getRateDetailByCategoryId(props.categories.CategoryId)
       .then((res) => {
-        setHide(props.categories.IsCmt);
         setData(res.data);
       })
   }, [props.categories, hide])
@@ -44,9 +44,11 @@ const CommentCourses = (props) => {
         RateValue: valueRate,
         Cmt: valueText
       };
+
       CoursesTokenServices().addCmt(values).
         then((response) => {
           setHide(1);
+          setRateValue(valueRate);
           Swal.fire(
             'Cảm ơn bạn đã góp ý ^^'
           )
@@ -96,7 +98,7 @@ const CommentCourses = (props) => {
       </div>
       <div style={{ position: 'relative' }}>
         {
-          props.categories.IsRes > 0 && hide == 0 ?
+          props.categories.IsRes > 0 && hide === 0 ?
             <>
               <div className="m-b10">
                 <TextArea value={valueText} onChange={changeInputText} rows={4} placeholder="Mời bạn để lại bình luận" />
@@ -110,8 +112,8 @@ const CommentCourses = (props) => {
               </div>
             </>
             :
-            hide == 1 ?
-              <h5 className="text-center">Bạn đã đánh giá {props.categories.RateValue} <i className="fa fa-star" style={{ color: 'red' }} /> cho khóa học này</h5>
+            hide === 1 ?
+              <h5 className="text-center">Bạn đã đánh giá  {rateValue} <i className="fa fa-star" style={{ color: 'red' }} /> cho khóa học này</h5>
               :
               <></>
         }

@@ -169,7 +169,8 @@ module.exports = {
                                                         AND D.ENDDATE >= ?)`,  [date,date] ))
                         .leftJoin(db.raw(`(SELECT CATEGORYID, SUM(VIEWER) AS TOTALVIEW
                                            FROM PRODUCT
-                                           WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
+                                           WHERE ISACTIVE = TRUE
+                                           GROUP BY CATEGORYID) AS V ON V.CATEGORYID = C.CATEGORYID`))
                         .whereRaw('C.ISACTIVE = ?', true)
                         .orderBy(orderbyType, 'DESC')
                         .limit(limit);
@@ -201,7 +202,8 @@ module.exports = {
                                                         AND D.ENDDATE >= ?)`,  [date,date] ))
                         .leftJoin(db.raw(`(SELECT CATEGORYID, SUM(VIEWER) AS TOTALVIEW
                                            FROM PRODUCT
-                                           WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
+                                           WHERE ISACTIVE = TRUE
+                                           GROUP BY CATEGORYID) AS V ON V.CATEGORYID = C.CATEGORYID`))
                         .leftJoin(db.raw(`(SELECT CATEGORYID, COUNT(USERSID) AS TotalLike
                                            FROM LIKEDETAIL
                                            WHERE ISACTIVE = TRUE
@@ -241,7 +243,8 @@ module.exports = {
                                                         AND D.ENDDATE >= ?)`,  [date,date] ))
                         .leftJoin(db.raw(`(SELECT CATEGORYID, SUM(VIEWER) AS TOTALVIEW
                                            FROM PRODUCT
-                                           WHERE ISACTIVE = TRUE) AS V ON V.CATEGORYID = C.CATEGORYID`))
+                                           WHERE ISACTIVE = TRUE
+                                           GROUP BY CATEGORYID) AS V ON V.CATEGORYID = C.CATEGORYID`))
                         .leftJoin(db.raw(`(SELECT CATEGORYID, COUNT(USERSID) AS TotalRes
                                            FROM RESDETAIL
                                            WHERE ISACTIVE = TRUE

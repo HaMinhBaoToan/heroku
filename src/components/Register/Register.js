@@ -35,6 +35,8 @@ const Register = () => {
     setCheckLocalStorage,
     setCheckOTPConfim,
     setUserJobId,
+    setUserid,
+    setProfile,
   } = useContext(AppContext);
 
   const onFinish = (values) => {
@@ -58,6 +60,8 @@ const Register = () => {
             .then((res) => {
               setnameUser(parseAccessToken_res(res.data).DislayName);
               setimageUser(parseAccessToken_res(res.data).Image);
+              setUserid(parseAccessToken_res(res.data).UsersId);
+              setProfile(parseAccessToken_res(res.data).Users);
               setUserJobId(parseAccessToken_res(res.data).JobId)
               saveToken(res.data);
               if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
@@ -102,6 +106,8 @@ const Register = () => {
             .then((res) => {
               setnameUser(parseAccessToken_res(res.data).DislayName);
               setimageUser(parseAccessToken_res(res.data).Image);
+              setUserid(parseAccessToken_res(res.data).UsersId);
+              setProfile(parseAccessToken_res(res.data).Users);
               setUserJobId(parseAccessToken_res(res.data).JobId)
               saveToken(res.data);
               if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
