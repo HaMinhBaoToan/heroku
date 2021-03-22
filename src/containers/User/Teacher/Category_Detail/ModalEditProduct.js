@@ -68,7 +68,7 @@ const ModalEditProduct = ({
         ProductId: ProductEdit.ProductId,
         NumberNo: ProductEdit.NumberNo,
         ChangeFile: false,
-        Public:ProductEdit.Public.data[0]
+        Public:ProductEdit.Public
       });
     }
   }, [ProductEdit,form]);
