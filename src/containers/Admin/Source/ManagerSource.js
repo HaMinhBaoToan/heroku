@@ -238,7 +238,7 @@ const ManagetUser = () => {
           )}
         </Col>
 
-        <Col span={24}>
+        {/* <Col span={24}>
           <Editor
             editorState={editorState}
             toolbarClassName="toolbarClassName"
@@ -262,7 +262,7 @@ const ManagetUser = () => {
           />
 
           
-        </Col>
+        </Col> */}
       </Row>
     </>
     // <Tabs type="card">
