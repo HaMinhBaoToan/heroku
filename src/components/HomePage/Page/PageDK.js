@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import HomeServices from "../../../services/home.service"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Products from "../../Products/Products"
@@ -25,12 +25,16 @@ const responsive = {
     }
 };
 
-const PageDK = (props) => {
+const PageDK = () => {
 
-    const categories = props.categories.slice();
+    const [categories, setCategories] = useState([]);
+    const quanlimit = 10;
 
-    categories.sort((a, b) => (a.QuanRes < b.QuanRes) ? 1 : -1)
-    categories.length = Math.min(categories.length, 10);
+    useEffect(() => {
+        HomeServices().showCategorySortWeekResDetail(quanlimit).then((res) => {
+        setCategories(res.data);
+    })
+    }, []);
 
 
     return (

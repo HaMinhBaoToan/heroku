@@ -7,6 +7,7 @@ import CategoryService from "../../../services/category.service";
 
 const Source = ({ datasource, APIgetAllCategory }) => {
     const handleProduct = (category, setEnable, setDisable, upDatecategory) => {
+        // console.log(category,setEnable,setDisable)
         if (setEnable === true) {
             CategoryService()
             .setSingleCategory(category.CategoryId, {
@@ -104,7 +105,7 @@ const Source = ({ datasource, APIgetAllCategory }) => {
                         <div className="row card-courses-dec">
                             <div className="col-md-12">
                                 <h6 className="m-b10">Course Description</h6>
-                                <p>{item.Note}</p>
+                                <p>{item.Note }</p>
                             </div>
                             {/* <div className="col-md-12">
                                 <a href="#" className="btn green radius-xl outline">Approve</a>

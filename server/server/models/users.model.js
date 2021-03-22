@@ -20,25 +20,51 @@ module.exports = {
     return user[0];
   },
   async favoriteCategory(id) {
-    const user = await db("likedetail").where({ UsersId: id, isActive: 1 });
-    if (user.length === 0) {
-      return null;
-    }
-    return user;
+    var date = new Date();
+    const category = await db.select(db.raw(`C.*
+                                            ,CG.CategoryGroupName
+                                            ,U.DislayName
+                                            ,D.Value`))
+                              .from(`LIKEDETAIL AS LD`)
+                              .leftJoin(db.raw(`CATEGORY AS C ON C.CATEGORYID = LD.CATEGORYID`))
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .whereRaw('LD.ISACTIVE = TRUE')
+                              .andWhereRaw(`LD.USERSID = ?`, [id])
+    
+    return category
   },
   async CategoryUser(id) {
-    const user = await db("resdetail").where({ UsersId: id, isActive: 1 });
-    if (user.length === 0) {
-      return null;
-    }
-    return user;
+    var date = new Date();
+    const category = await db.select(db.raw(`C.*
+                                            ,CG.CategoryGroupName
+                                            ,U.DislayName
+                                            ,1 AS IsRes
+                                            ,RD.IsDone
+                                            ,D.Value`))
+                              .from(`RESDETAIL AS RD`)
+                              .leftJoin(db.raw(`CATEGORY AS C ON C.CATEGORYID = RD.CATEGORYID`))
+                              .leftJoin(db.raw(`CATEGORYGROUP AS CG ON C.CATEGORYGROUPID = CG.CATEGORYGROUPID`))
+                              .leftJoin(db.raw(`USERS AS U ON C.TEACHERID = U.USERSID`))
+                              .leftJoin(db.raw(`DISCOUNT AS D ON (D.CATEGORYID = C.CATEGORYID
+                                                              AND D.ISACTIVE = TRUE
+                                                              AND D.FROMDATE <= ?
+                                                              AND D.ENDDATE >= ?)`,  [date,date] ))
+                              .whereRaw('RD.ISACTIVE = TRUE')
+                              .andWhereRaw(`RD.USERSID = ?`, [id])
+    
+    return category
   },
   async categoryDetail(id) {
-    const user = await db("category").where("CategoryId", id);
-    if (user.length === 0) {
+    const category = await db("category").where("CategoryId", id);
+    if (category.length <= 0) {
       return null;
     }
-    return user;
+    return category;
   },
 
   async add(user) {

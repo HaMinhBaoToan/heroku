@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useParams,
-  Link,
-} from "react-router-dom";
-import { Breadcrumb, Button, notification } from "antd";
+import { Link } from "react-router-dom";
+import { Breadcrumb, Button } from "antd";
 import CategoryService from "../../../services/category.service";
 import { AppContext } from "../../../utils/AppContext";
 import Source from "./Source";
@@ -18,7 +12,9 @@ const Courses = () => {
   const [datasource, setdatasource] = useState([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  useEffect(() => {
+    APIgetCategoryByUserID();
+  }, []);
   const APIgetCategoryByUserID = () => {
     CategoryService()
       .getCatagorybyUserID(userid)
@@ -41,9 +37,11 @@ const Courses = () => {
           .addCategory(values)
           .then((res) => {
             if (res.data) {
+              console.log(res.data);
+              APIgetCategoryByUserID();
+
               setVisible(false);
               setLoading(false);
-              APIgetCategoryByUserID();
             }
           })
           .catch((err) => {});
@@ -63,9 +61,7 @@ const Courses = () => {
       }, 2000);
     }
   };
-  useEffect(() => {
-    APIgetCategoryByUserID();
-  }, []);
+
   return (
     <div class="page-content">
       <div className="content-block">

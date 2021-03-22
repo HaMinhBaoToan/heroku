@@ -1,12 +1,13 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 import { localparseJson } from "../utils/utils";
+import Serivces from "./serivces";
 
 export default function UserService() {
   const tokenString = localStorage.getItem("AcademyOnline_Token");
   const accessToken = localparseJson(tokenString).accessToken;
 
-  const API_URL = "/api/users";
+  const API_URL = `${Serivces().API_SERVERPORT}/api/users`;
 
   const getUserByID = (id) => {
     return axios.get(`${API_URL}/${id}`, { headers: authHeader(accessToken) });
@@ -31,7 +32,6 @@ export default function UserService() {
     });
   };
   const getCategorysUser = (id) => {
-    debugger;
     return axios.get(`${API_URL}/category-user/${id}`, {
       headers: authHeader(accessToken),
     });

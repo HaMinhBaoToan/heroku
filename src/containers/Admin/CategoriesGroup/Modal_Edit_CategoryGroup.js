@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import { Modal, Form, Input, Image } from "antd";
 
-const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal }) => {
+const ModalForm = ({
+  visibleModalEdit,
+  onEdit,
+  onCancel,
+  categoryGroupEditModal,
+}) => {
   const [form] = Form.useForm();
   const [imageBase64, setimageBase64] = useState();
   useEffect(() => {
@@ -12,7 +17,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, categoryGroupEditModal 
       CategoryGroupName: categoryGroupEditModal.CategoryGroupName,
       Image: categoryGroupEditModal.Image,
     });
-  }, [categoryGroupEditModal])
+  }, [categoryGroupEditModal, form]);
   return (
     <Modal
       visible={visibleModalEdit}

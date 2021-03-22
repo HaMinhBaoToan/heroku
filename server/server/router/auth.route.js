@@ -31,24 +31,27 @@ router.post("/log-in", async function (req, res) {
       email: false,
     });
   }
-
-  if (!bcrypt.compareSync(req.body.Password, user.Password)) {
-    return res.status(200).json({
-      Password: false,
+  if (user.IsActive === 1) {
+    if (!bcrypt.compareSync(req.body.Password, user.Password)) {
+      return res.status(200).json({
+        Password: false,
+      });
+    }
+    const accessToken = accessTokenfs(user);
+    const refreshToken = randomstring.generate();
+    await userModel.updateRefreshToken(user.UsersId, refreshToken);
+    res.status(200).json({
+      authenticated: true,
+      accessToken,
+      refreshToken,
+    });
+  } else {
+    res.status(200).json({
+      IsActive: false,
     });
   }
-
-  const accessToken = accessTokenfs(user);
-
-  const refreshToken = randomstring.generate();
-  await userModel.updateRefreshToken(user.UsersId, refreshToken);
-
-  res.status(200).json({
-    authenticated: true,
-    accessToken,
-    refreshToken,
-  });
 });
+
 router.post("/log-in-with-google", async function (req, res) {
   const user = await userModel.singleByEmail(req.body.Email);
   if (user === null) {
@@ -56,17 +59,22 @@ router.post("/log-in-with-google", async function (req, res) {
       email: false,
     });
   }
+  if (user.IsActive === 1) {
+    const accessToken = accessTokenfs(user);
 
-  const accessToken = accessTokenfs(user);
+    const refreshToken = randomstring.generate();
+    await userModel.updateRefreshToken(user.UsersId, refreshToken);
 
-  const refreshToken = randomstring.generate();
-  await userModel.updateRefreshToken(user.UsersId, refreshToken);
-
-  res.status(200).json({
-    authenticated: true,
-    accessToken,
-    refreshToken,
-  });
+    res.status(200).json({
+      authenticated: true,
+      accessToken,
+      refreshToken,
+    });
+  } else {
+    res.status(200).json({
+      IsActive: false,
+    });
+  }
 });
 
 router.post("/check-otp-email", async function (req, res) {
@@ -249,7 +257,7 @@ router.post("/refresh", async function (req, res) {
   var singleUser_DislayName = singleUser.DislayName;
   if (ret === true) {
     const newAccessToken = jwt.sign(
-      { UsersId, JobId, DislayName:singleUser_DislayName, Image, OTP_Confim },
+      { UsersId, JobId, DislayName: singleUser_DislayName, Image, OTP_Confim },
       "SECRET_KEY",
       {
         expiresIn: 600 * 10,
@@ -259,7 +267,7 @@ router.post("/refresh", async function (req, res) {
       accessToken: newAccessToken,
     });
   }
-  
+
   res.status(400).json({
     message: "Invalid refresh token.",
   });

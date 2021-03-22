@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { //Input,
         Avatar, Dropdown, Menu, notification } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import AuthService from "../../services/auth.service";
 import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken } from "../../utils/utils";
+
+import Swal from  'sweetalert2'
 
 //const { Search } = Input;
 
@@ -41,8 +43,10 @@ const HeaderCustomize = () => {
   //   return x;
   // };
 
+  const [textSearch, setTextSearch] = useState('');
+
   const menu = (
-    <Menu style={{ width: 180 }} className="mt-3 px-2">
+    <Menu style={{ width: 200 }} className="mt-3 px-2">
       {userJobId === 1 && (
         <Menu.Item>
           <Link to="/admin/user">
@@ -109,6 +113,23 @@ const HeaderCustomize = () => {
     );
   };
 
+  const changeSearch = event => {
+    setTextSearch(event.target.value);
+  }
+
+  const history = useHistory();
+  const handleOnClick = () => {
+    if(textSearch == '') { 
+      Swal.fire(
+        'Tìm Kiếm',
+        'Vui lòng nhập thông tin cần tìm kiếm'
+      )
+    } else {
+      history.push(`/courses/search?keyword=${textSearch}`);
+      setTextSearch('');
+    }
+  };
+
   const islogin = () => {
     const tokenString = parseAccessToken(
       localStorage.getItem("AcademyOnline_Token")
@@ -124,16 +145,21 @@ const HeaderCustomize = () => {
 
     return (
       <>
+      { userJobId == 2 ?
+      <>
         <li>
-          <Link to="/" className="text-white">
+          <Link to="/profile/FavorCourse" className="text-white">
             <span className="h6">
               <i style={{ marginLeft: "20px" }} className="fa fa-heart-o" /> Yêu
               thích
             </span>
           </Link>
         </li>
+      </>      
+      : <></>  
+      }
         <li>
-          <Link to="/" className="text-white">
+          <Link to="/profile/RegisteredCourse" className="text-white">
             <span className="h6">
               <i
                 style={{ marginLeft: "20px" }}
@@ -150,7 +176,7 @@ const HeaderCustomize = () => {
               to="/profile"
               onClick={profileUser}
             >
-              <Avatar size="large" src={`data:image/jpg;base64,${imageUser}`} />
+              <Avatar size="large" src= { imageUser ? imageUser : "https://res.cloudinary.com/dzyfkhpce/image/upload/v1616132109/OnlineAcademy/Avatar/avata_ywn2ea.png" } />
             </Link>
           </Dropdown>
         </li>
@@ -177,17 +203,20 @@ const HeaderCustomize = () => {
               <div className="ttr-search-input-wrapper">
                 <input
                   type="text"
-                  name="qq"
-                  placeholder="Tìm kiếm khóa học..."
+                  name="search"
+                  placeholder="Tìm kiếm khóa học, lĩnh vực, ..."
                   className="ttr-search-input"
+                  value={textSearch}
+                  onChange={changeSearch}
                 />
                 <button
                   type="submit"
                   name="search"
                   className="ttr-search-submit"
-                >
-                  <i className="fa fa-search" />
+                  onClick={ () => handleOnClick() }>
+                    <i className="fa fa-search" />
                 </button>
+
               </div>
             </div>
             <div className="topbar-right">
@@ -203,7 +232,7 @@ const HeaderCustomize = () => {
                     </span>
                   </Link>
                 </li>
-                {checkLocalStorage ? islogin() : login_register()}
+                {checkLocalStorage  ? islogin() : login_register()}
               </ul>
             </div>
           </div>

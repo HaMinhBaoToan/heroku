@@ -154,8 +154,8 @@ h4 {
 }
 h5 {
   font-size: 18px;
-  line-height: 24px;
-  margin-bottom: 10px;
+  line-height: 20px;
+  margin-bottom: 0px;
   font-weight: 500;
 }
 h6 {
@@ -163,7 +163,6 @@ h6 {
   line-height: 22px;
   margin-bottom: 10px;
   font-weight: 500;
-  padding-right: 50px;
 }
 @media only screen and (max-width: 767px) {
   h1 {

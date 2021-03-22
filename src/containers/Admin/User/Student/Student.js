@@ -242,7 +242,7 @@ const Teacher = () => {
       <Row>
         <Col span={12}>
           <Input
-            placeholder="Mã sản phẩm, tên sản phẩm"
+            placeholder="Tên học viên"
             onChange={(e) => txt_Changed(e)}
             size="large"
             prefix={

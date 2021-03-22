@@ -23,6 +23,11 @@ const InfoTeacher = () => {
         userId: userid,
       })
       .then((res) => {
+        if(!res.data.user[0].TeacherNote)
+        {
+          res.data.user[0].TeacherNote = " <p> <span className='text-danger'>Chưa có mô tả</span></p>";
+        }
+        
         setNote(res.data.user[0].TeacherNote);
         const contentBlock = htmlToDraft(res.data.user[0].TeacherNote);
         if (contentBlock) {

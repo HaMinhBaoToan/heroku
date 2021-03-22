@@ -28,17 +28,17 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
+    "socket.io-client": "^4.0.0",
     "sweetalert2": "^10.15.5",
     "video-react": "^0.14.1",
     "web-vitals": "^0.2.4",
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start-client": "react-scripts start",
-    "build": "react-scripts build && (cd server && npm install)",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "cd server && npm start"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

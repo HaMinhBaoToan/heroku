@@ -84,33 +84,22 @@ router.delete("/:id", async function (req, res) {
 router.get("/favorite-category/:id", async function (req, res) {
   const id = req.params.id;
   const User = await usersModel.favoriteCategory(id);
-  if (User == null) {
+  if (User.length <= 0) {
     return res.status(200).json(false);
   }
-
-  let temp = [];
-  User.forEach((e) => {
-    const category = usersModel.categoryDetail(e.Categoryid);
-    temp.push(category);
-  });
-  res.status(200).json(temp);
-  // const listCategory = [];
-  // listCategory=   User.Categoryid;
+  
+  res.status(200).json(User);
+  
 });
 
 router.get("/category-user/:id", async function (req, res) {
   const id = req.params.id;
   const User = await usersModel.CategoryUser(id);
-  if (User == null) {
+  if (User.length <=0) {
     return res.status(200).json(false);
   }
 
-  let temp = [];
-  User.forEach((e) => {
-    const category = usersModel.categoryDetail(e.Categoryid);
-    temp.push(category);
-  });
-  res.status(200).json(temp);
+  res.status(200).json(User);
   // const listCategory = [];
   // listCategory=   User.Categoryid;
 });

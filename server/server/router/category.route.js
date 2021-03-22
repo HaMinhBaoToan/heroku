@@ -1,6 +1,7 @@
 const express = require("express");
 const categoryModel = require("../models/category.model");
 const { cloudinary } = require("../../server/utils/cloudinary");
+const { sendMSGClient } = require("../../ws");
 
 const router = express.Router();
 
@@ -25,11 +26,11 @@ router.post("/", async function (req, res) {
   if (req.body.Image) {
     console.log("image");
     var resual;
-    cloudinary.uploader.upload(addCategory.Image, async function (err, res) {
-      addCategory.Image = res.url;
+    cloudinary.uploader.upload(addCategory.Image, async function (err, res1) {
+      addCategory.Image = res1.url;
       resual = await categoryModel.add(addCategory);
+      res.status(200).json(resual);
     });
-    res.status(200).json(resual);
   } else {
     console.log("no img");
     const resual = await categoryModel.add(addCategory);
@@ -69,21 +70,38 @@ router.get("/byUser/:id", async function (req, res) {
 router.put("/:id", async function (req, res) {
   const id = req.params.id;
   const values = req.body;
-  if (values.Image) {
-    if (values.Change === false) {
-    } else {
-      cloudinary.uploader.upload(values.Image, async function (err, res1) {
-        values.Image = res1.url;
-        delete values.Change;
-        await categoryModel.update(id, values);
-        res.status(200).json({
-          message: "update success",
-        });
-      });
-    }
+  // console.log(id)
+  if (values.Change === false) {
+    delete values.Change;
+    await categoryModel.update(id, values);
+    res.status(200).json({
+      message: "update success",
+    });
   } else {
+    delete values.Change;
+
+    cloudinary.uploader.upload(values.Image, async function (err, res1) {
+      values.Image = res1.url;
+      delete values.Change;
+      await categoryModel.update(id, values);
+      res.status(200).json({
+        message: "update success",
+      });
+    });
   }
+  const list = await categoryModel.UserByCategoryID(id);
+  sendMSGClient(list);
 });
+
+router.put("/setIsActive/:id", async function (req, res) {
+  const id = req.params.id;
+  const values = req.body;
+  await categoryModel.update(id, values);
+  res.status(200).json({
+    message: "update success",
+  });
+});
+
 router.delete("/:id", async function (req, res) {
   const id = req.params.id || 0;
   if (id === 0) {

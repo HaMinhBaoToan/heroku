@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, Form, Input, InputNumber, Button } from "antd";
 import { Player } from "video-react";
 
@@ -13,7 +13,6 @@ const ModalAddProduct = ({
   const [previewVideo, setpreviewVideo] = useState();
   const [showVideo, setshowVideo] = useState(false);
   const [messError, setmessError] = useState("");
-
 
   const uploadFile = async (e) => {
     if (e.target.files[0]) {
@@ -36,13 +35,11 @@ const ModalAddProduct = ({
         reader.onloadend = function (event) {
           const dataURL = event.target.result;
           setpreviewVideo(dataURL); // preview
-        setshowVideo(true);
-
+          setshowVideo(true);
         };
 
         form.setFieldsValue({
           File: e.target.files[0],
-         
         });
       }
     }
@@ -51,7 +48,7 @@ const ModalAddProduct = ({
     <Modal
       width={1000}
       visible={visibleModalAddProduct}
-      title="Sửa Thông Tin Khóa Học"
+      title="Thêm Video"
       okText="Sửa"
       cancelText="Đóng"
       onCancel={onCancel}
@@ -67,16 +64,14 @@ const ModalAddProduct = ({
             form
               .validateFields()
               .then((values) => {
-                  onAddProduct(values,form,setshowVideo,
-                    previewVideo);
-
+                onAddProduct(values, form, setshowVideo, previewVideo);
               })
               .catch((info) => {
                 console.log("Validate Failed:", info);
               });
           }}
         >
-          {loadingAdd ? "Vui lòng đợi trong giây lát" : "Chỉnh sửa"}
+          {loadingAdd ? "Vui lòng đợi trong giây lát" : "Thêm "}
         </Button>,
       ]}
       // onOk={() => {
@@ -91,7 +86,6 @@ const ModalAddProduct = ({
       // }}
     >
       <Form form={form} layout="vertical" name="form_in_modal">
-      
         <Form.Item
           name="NumberNo"
           label="Bài số: "

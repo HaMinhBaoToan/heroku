@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { convertToRaw, EditorState, ContentState } from "draft-js";
+import { convertToRaw } from "draft-js";
 import { Modal, Form, Input, Image, Radio, InputNumber, Select,Button } from "antd";
 import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
+// import htmlToDraft from "html-to-draftjs";
 import CategorygroupService from "../../../services/categorygroup.service";
 
 const { Option } = Select;
@@ -162,7 +162,7 @@ const ModalAddCategory = ({ visible, onEdit, onCancel,loading }) => {
             reader.readAsDataURL(e.target.files[0]);
             reader.onloadend = function (event) {
               var base64Data = event.target.result;
-              console.log(base64Data);
+              // console.log(base64Data);
               setimageBase64(base64Data);
               setchangeIMG(true);
               form.setFieldsValue({

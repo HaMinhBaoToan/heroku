@@ -11,7 +11,7 @@ const ModalForm = ({ visibleModalEdit, onEdit, onCancel, userEditModal }) => {
       DislayName: userEditModal.DislayName,
       Telephone: userEditModal.Telephone,
     });
-  }, [userEditModal])
+  }, [userEditModal,form])
   return (
     <Modal
       visible={visibleModalEdit}

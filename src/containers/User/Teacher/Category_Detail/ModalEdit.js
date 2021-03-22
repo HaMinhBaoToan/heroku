@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { convertToRaw, EditorState, ContentState } from "draft-js";
-import { Modal, Form, Input, Image, Radio, InputNumber, Select,Button } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  Image,
+  Radio,
+  InputNumber,
+  Select,
+  Button,
+} from "antd";
 import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
 
@@ -21,27 +30,16 @@ const ModalEdit = ({
   const [imageBase64, setimageBase64] = useState();
   const [changeIMG, setchangeIMG] = useState(false);
 
-  function toDataURL(url, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      var reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.send();
-  }
-
   const [form] = Form.useForm();
 
   useEffect(() => {
-    // toDataURL(categories.categoryImage, function (dataUrl) {
-    //     setimageBase64(dataUrl);
-    //   });
-    const contentBlock = htmlToDraft(categories.Remark);
+    var contentBlock;
+
+    if (categories.Remark) {
+      contentBlock = htmlToDraft(categories.Remark);
+    } else {
+      contentBlock = htmlToDraft("");
+    }
     if (contentBlock) {
       const contentState = ContentState.createFromBlockArray(
         contentBlock.contentBlocks
@@ -67,7 +65,7 @@ const ModalEdit = ({
       Image: categories.categoryImage,
       Change: false,
     });
-  }, [categories]);
+  }, [categories,form]);
 
   const onEditorStateChange = (editorState) => {
     seteditorState(editorState);

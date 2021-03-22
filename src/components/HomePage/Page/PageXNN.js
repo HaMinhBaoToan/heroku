@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import HomeServices from "../../../services/home.service"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Products from "../../Products/Products"
@@ -24,14 +24,16 @@ const responsive = {
     }
 };
 
-const PageXNN = (props) => {
+const PageXNN = () => {
 
-    const categories = props.categories.slice();
+    const [categories, setCategories] = useState([]);
+    const quanlimit = 10;
 
-    categories.sort((a, b) => (a.TotalView < b.TotalView) ? 1 : -1)
-    categories.length = Math.min(categories.length, 10);
-
-    console.log(props.categories);
+    useEffect(() => {
+        HomeServices().showCategoryOrderBy("TotalView", quanlimit).then((res) => {
+        setCategories(res.data);
+    })
+    }, []);
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">

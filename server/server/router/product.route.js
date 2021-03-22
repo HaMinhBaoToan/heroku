@@ -54,7 +54,7 @@ router.get("/byCategory/:id", async function (req, res) {
   if (list.length !== 0) {
     res.json(list);
   } else {
-    console.log("null");
+    res.json(list);
   }
 });
 
@@ -64,6 +64,12 @@ router.put(
   async function (req, res) {
     const id = req.params.id;
     const values = req.body;
+
+    if (values.Public === "0") {
+      values.Public = 0;
+    } else {
+      values.Public = 1;
+    }
 
     const checkChangeFile = values.ChangeFile;
     delete values.ChangeFile;

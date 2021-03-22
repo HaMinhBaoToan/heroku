@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Form, Input, InputNumber, Button } from "antd";
+import { Modal, Form, Input, InputNumber, Button,Radio } from "antd";
 import { Player } from "video-react";
 import { changeTailURL } from "../../../../utils/utils";
 
@@ -15,16 +15,16 @@ const ModalEditProduct = ({
   const [previewVideo, setpreviewVideo] = useState();
   const [showVideo, setshowVideo] = useState(true);
   const [messError, setmessError] = useState("");
-  const openfile = async (e) => {
-    var reader = new FileReader();
-    return await new Promise((solve) => {
-      reader.onloadend = function (event) {
-        const dataURL = reader.result;
-        solve(dataURL);
-      };
-      reader.readAsArrayBuffer(e.target.files[0]);
-    });
-  };
+  // const openfile = async (e) => {
+  //   var reader = new FileReader();
+  //   return await new Promise((solve) => {
+  //     reader.onloadend = function (event) {
+  //       const dataURL = reader.result;
+  //       solve(dataURL);
+  //     };
+  //     reader.readAsArrayBuffer(e.target.files[0]);
+  //   });
+  // };
 
   const uploadFile = async (e) => {
     if (e.target.files[0]) {
@@ -58,6 +58,7 @@ const ModalEditProduct = ({
     }
    
   };
+  // console.log(ProductEdit.Public.data[0])
   useEffect(() => {
     if (ProductEdit) {
       setpreviewVideo(ProductEdit.Video); // preview
@@ -67,9 +68,10 @@ const ModalEditProduct = ({
         ProductId: ProductEdit.ProductId,
         NumberNo: ProductEdit.NumberNo,
         ChangeFile: false,
+        Public:ProductEdit.Public.data[0]
       });
     }
-  }, [ProductEdit]);
+  }, [ProductEdit,form]);
   return (
     <Modal
       width={1000}
@@ -139,7 +141,20 @@ const ModalEditProduct = ({
         >
           <Input />
         </Form.Item>
-
+        <Form.Item
+          name="Public"
+          label="Trạng Thái Hiển Thì Cho Xem Trước:"
+          rules={[{ required: true, message: "Please pick an item!" }]}
+        >
+          <Radio.Group size="middle">
+            <Radio.Button style={{ color: "#52c41a" }} value={1}>
+              Hiển thị 
+            </Radio.Button>
+            <Radio.Button style={{ color: "#faad14" }} value={0}>
+              Tạm Ẩn
+            </Radio.Button>
+          </Radio.Group>
+        </Form.Item>
         <input
           id="videoss"
           className="inputFile"

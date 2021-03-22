@@ -7,6 +7,7 @@ import {
   Button,
   Popover,
   notification,
+  Image,
 } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Player } from "video-react";
@@ -43,49 +44,69 @@ const Detail = () => {
   }, []);
 
   const getInfoCategoryByID = () => {
+    console.log(CategoryID.split("-", 1));
     CategoryService()
       .getSingleCategory(CategoryID.split("-", 1))
       .then(
         (response) => {
           console.log(response.data);
           setCategories(response.data);
-          ProductService()
-            .getProductByCategoryID(CategoryID.split("-", 1))
-            .then((res) => {
-              console.log(res.data);
-
-              setlistProduct(res.data);
-              setvSumvideo(res.data.length);
-            })
-            .catch((err) => {});
         },
         (error) => {}
       );
+
+    ProductService()
+      .getProductByCategoryID(CategoryID.split("-", 1))
+      .then((res) => {
+        setlistProduct(res.data);
+        console.log(res);
+        setvSumvideo(res.data.length);
+      })
+      .catch((err) => {});
   };
 
   const onEdit = (values) => {
     setLoadingEditCategory(true);
     const id = values.CategoryId;
     delete values.CategoryId;
+    console.log(values);
 
-    setTimeout(() => {
-      CategoryService()
-        .setSingleCategory(id, values)
-        .then((res) => {
-          if (res.data);
-          {
-            getInfoCategoryByID();
-            setVisible(false);
-    setLoadingEditCategory(false);
-
-          }
-        })
-        .catch((err) => {});
-    }, 10000);
+    if (values.Change) {
+      setTimeout(() => {
+        CategoryService()
+          .setSingleCategory_Teacher(id, values)
+          .then((res) => {
+            if (res.data) {
+              getInfoCategoryByID();
+              setVisible(false);
+              setLoadingEditCategory(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, 10000);
+    } else {
+      setTimeout(() => {
+        CategoryService()
+          .setSingleCategory_Teacher(id, values)
+          .then((res) => {
+            if (res.data) {
+              getInfoCategoryByID();
+              setVisible(false);
+              setLoadingEditCategory(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, 2000);
+    }
   };
   const onEditProduct = (values) => {
     const id = values.ProductId;
     delete values.ProductId;
+
     if (values.ChangeFile) {
       setLoading(true);
 
@@ -126,11 +147,10 @@ const Detail = () => {
         ProductService()
           .addProduct(parseForm(values))
           .then((result) => {
-            getInfoCategoryByID();
             setLoadingAdd(false);
             setvisibleModalAddProduct(false);
+            getInfoCategoryByID();
             form.resetFields();
-
             setshowVideo(false);
             previewVideo();
           })
@@ -143,11 +163,11 @@ const Detail = () => {
         ProductService()
           .addProduct(parseForm(values))
           .then((result) => {
-            getInfoCategoryByID();
+            console.log(result);
             setLoadingAdd(false);
             setvisibleModalAddProduct(false);
+            getInfoCategoryByID();
             form.resetFields();
-
             setshowVideo(false);
             previewVideo();
           })
@@ -167,12 +187,16 @@ const Detail = () => {
         ProductService()
           .deleteSingleProduct(product.ProductId)
           .then((response) => {
+            console.log(response);
+            // if(response.data ===)
+            // {
             getInfoCategoryByID();
             notification["success"]({
               message: "Hoàn Tất",
               description: "bạn đã xoá thành công",
               placement: "bottomRight",
             });
+            // }
           })
           .catch(function (error) {
             console.log("ERROR from server:", error);
@@ -251,7 +275,7 @@ const Detail = () => {
               <div className="col-lg-9 col-md-8 col-sm-12">
                 <div className="courses-post">
                   <div className="ttr-post-media media-effect">
-                    <img src={categories.categoryImage}></img>
+                    <Image src={categories.categoryImage}></Image>
                   </div>
                   <div className="ttr-post-info">
                     <div className="ttr-post-title ">
@@ -267,7 +291,13 @@ const Detail = () => {
                 </div>
                 <div className="courese-overview m-b20">
                   <h2>Lợi ích từ khóa học</h2>
-                  {ReactHtmlParser(categories.Remark)}
+                  {categories.Remark ? (
+                    ReactHtmlParser(categories.Remark)
+                  ) : (
+                    <p>
+                      <span className="text-danger">Chưa có mô tả</span>
+                    </p>
+                  )}
                 </div>
                 <div className="m-b20">
                   {/* <div className="float-left mr-5">

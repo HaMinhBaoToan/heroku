@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Products from "../../Products/Products"
+import HomeServices from "../../../services/home.service"
 
 const responsive = {
     superLargeDesktop: {
@@ -24,20 +24,24 @@ const responsive = {
     }
 };
 
-const PageYTN = ( props ) => {
+const PageYTN = () => {
 
-    const categories = props.categories.slice();
+    const [categories, setCategories] = useState([]);
+    const quanlimit = 5;
 
-    categories.sort((a, b) => (a.QuanLike < b.QuanLike) ? 1 : -1)
-    categories.length = Math.min(categories.length, 5);
+    useEffect(() => {
+        HomeServices().showCategorySortWeekLikeDetail(quanlimit).then((res) => {
+        setCategories(res.data);
+    })
+    }, []);
 
     return (
         <div className="section-area section-sp2 popular-courses-bx">
             <div className="container">
                  <div className="row">
                      <div className="col-md-12 heading-bx left">
-                         <h2 className="title-head">Nhiều người quan tâm</h2>
-                         <p>5 khóa học được yêu thích nhất</p>
+                         <h2 className="title-head">Nổi bật nhất</h2>
+                         <p>5 khóa học được yêu thích nhất trong tuần</p>
                      </div>
                  </div>
                  <Carousel responsive={responsive}>

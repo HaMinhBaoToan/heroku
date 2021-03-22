@@ -1,9 +1,14 @@
 import React, { useState, useContext } from "react";
-import { Form, Input, //Button,
-       Checkbox, Alert } from "antd";
+import {
+  Form,
+  Input, //Button,
+  Checkbox,
+  Alert,
+  notification,
+} from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from "react-google-login";
 import AuthService from "../../services/auth.service";
 import { AppContext } from "../../utils/AppContext";
 import { parseAccessToken_res } from "../../utils/utils";
@@ -30,67 +35,122 @@ const Login = () => {
   const [labelText, setLabelText] = useState("");
 
   const responseSuccessGoogle = (response) => {
-
     var values = {};
     values.Email = response.profileObj.email;
     AuthService()
       .loginWithGoogle(values)
       .then((res) => {
-        const { authenticated } = res.data;
-        if (authenticated) {
-          setnameUser(parseAccessToken_res(res.data).DislayName);
-          setimageUser(parseAccessToken_res(res.data).Image);
-          setUserid(parseAccessToken_res(res.data).UsersId);
-          setProfile(parseAccessToken_res(res.data).Users);
-          setUserJobId(parseAccessToken_res(res.data).JobId)
-          saveToken(res.data);
-          if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
-            setCheckOTPConfim(true);
-          } else {
-            setCheckOTPConfim(false);
-          }
-          setCheckLocalStorage(true);
-          setLabelText(<Alert message="ok !!" type="success" />);
-          history.replace(from);
-        } else {
+        if (res.data.IsActive === false) {
           setLabelText(
-            <Alert message="Email or Password is incorrect !!" type="error" />
+            <Alert
+              message="Tài Khoản của bạn tạm thời bị khóa, vui lòng liên hệ admin để mở !!"
+              type="error"
+            />
           );
           setTimeout(() => setLabelText(), 3000);
+        } else {
+          const { authenticated } = res.data;
+          if (authenticated) {
+            setnameUser(parseAccessToken_res(res.data).DislayName);
+            setimageUser(parseAccessToken_res(res.data).Image);
+            setUserid(parseAccessToken_res(res.data).UsersId);
+            setProfile(parseAccessToken_res(res.data).Users);
+            setUserJobId(parseAccessToken_res(res.data).JobId);
+            saveToken(res.data);
+            const ws = new WebSocket("ws://localhost:40567");
+
+            ws.onopen = function () {
+              console.log("connected");
+              ws.send(parseAccessToken_res(res.data).UsersId);
+            };
+            ws.onmessage = function (e) {
+              if (e.data) {
+                var c = JSON.parse(e.data);
+                notification["warning"]({
+                  message: "Thông Báo",
+                  description: `Giảng Viên: ${
+                    c.DislayName && c.DislayName
+                  } Vừa Cập Nhật Khóa Học: ${c.CategoryName && c.CategoryName}`,
+                  placement: "bottomRight",
+                });
+              }
+            };
+
+            if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
+              setCheckOTPConfim(true);
+            } else {
+              setCheckOTPConfim(false);
+            }
+            setCheckLocalStorage(true);
+            setLabelText(<Alert message="ok !!" type="success" />);
+            history.replace(from);
+          } else {
+            setLabelText(
+              <Alert message="Email or Password is incorrect !!" type="error" />
+            );
+            setTimeout(() => setLabelText(), 3000);
+          }
         }
       })
       .catch((err) => {
         console.log("err", err);
       });
-  }
+  };
   const responseErrorGoogle = (response) => {
-
     console.log(response);
-  }
+  };
   const onFinish = (values) => {
     AuthService()
       .login(values)
       .then((res) => {
-        const { authenticated } = res.data;
-        if (authenticated) {
-          setUserJobId(parseAccessToken_res(res.data).JobId)
-          setnameUser(parseAccessToken_res(res.data).DislayName);
-          setimageUser(parseAccessToken_res(res.data).Image);
-          setUserid(parseAccessToken_res(res.data).UsersId);
-          saveToken(res.data);
-          if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
-            setCheckOTPConfim(true);
-          } else {
-            setCheckOTPConfim(false);
-          }
-          setCheckLocalStorage(true);
-          setLabelText(<Alert message="ok !!" type="success" />);
-          history.replace(from);
-        } else {
+        if (res.data.IsActive === false) {
           setLabelText(
-            <Alert message="Email or Password is incorrect !!" type="error" />
+            <Alert
+              message="Tài Khoản của bạn tạm thời bị khóa, vui lòng liên hệ admin để mở !!"
+              type="error"
+            />
           );
           setTimeout(() => setLabelText(), 3000);
+        } else {
+          const { authenticated } = res.data;
+          if (authenticated) {
+            setUserJobId(parseAccessToken_res(res.data).JobId);
+            setnameUser(parseAccessToken_res(res.data).DislayName);
+            setimageUser(parseAccessToken_res(res.data).Image);
+            setUserid(parseAccessToken_res(res.data).UsersId);
+            const ws = new WebSocket("ws://localhost:40567");
+
+            ws.onopen = function () {
+              console.log("connected");
+              ws.send(parseAccessToken_res(res.data).UsersId);
+            };
+            ws.onmessage = function (e) {
+              if (e.data) {
+                var c = JSON.parse(e.data);
+                notification["warning"]({
+                  message: "Thông Báo",
+                  description: `Giảng Viên: ${
+                    c.DislayName && c.DislayName
+                  } Vừa Cập Nhật Khóa Học: ${c.CategoryName && c.CategoryName}`,
+                  placement: "bottomRight",
+                });
+              }
+            };
+            saveToken(res.data);
+            if (parseAccessToken_res(res.data).OTP_Confim.data[0] === 1) {
+              setCheckOTPConfim(true);
+            } else {
+              setCheckOTPConfim(false);
+            }
+            setCheckLocalStorage(true);
+            setLabelText(<Alert message="ok !!" type="success" />);
+            history.replace(from);
+          } else {
+            setLabelText(
+              <Alert message="Email or Password is incorrect !!" type="error" />
+            );
+            setTimeout(() => setLabelText(), 3000);
+          }
         }
       })
       .catch((err) => {
@@ -154,7 +214,7 @@ const Login = () => {
               </Link>
             </Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox >Remember me</Checkbox>
+              <Checkbox>Remember me</Checkbox>
             </Form.Item>
           </Form.Item>
 
@@ -184,7 +244,7 @@ const Login = () => {
                 buttonText="Login With Google"
                 onSuccess={responseSuccessGoogle}
                 onFailure={responseErrorGoogle}
-                cookiePolicy={'single_host_origin'}
+                cookiePolicy={"single_host_origin"}
               />
             </div>
           </div>

@@ -167,7 +167,7 @@ const ManagetUser = () => {
         </Col>
         <Col span={12}>
           <Input
-            placeholder="Mã sản phẩm, tên sản phẩm"
+            placeholder="Tên lĩnh vực"
             size="large"
             onChange={(e) => txt_Changed(e)}
             prefix={
@@ -190,6 +190,7 @@ const ManagetUser = () => {
         </Col>
 
         {dataRespontemp.map((item, index) => {
+          console.log(item.Image);
           return (
             <Col xs={24} sm={12} md={6} xl={5} className="mt-5 mx-3" key={index}>
               <div className="service-bx">

@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
-var path = require("path");
+// var path = require("path");
 // var fs = require("fs");
 
 
@@ -12,6 +12,7 @@ const USERS = require("./server/router/users.route");
 const CATEGORYGROUP = require("./server/router/categorygroup.route");
 const CATEGORY = require("./server/router/category.route");
 const COURSES = require("./server/router/courses.route");
+const COURSESTOKEN = require("./server/router/coursesToken.route");
 const PRODUCT = require("./server/router/product.route");
 
 const AUTH = require("./server/router/auth.route");
@@ -19,13 +20,12 @@ const HOME = require("./server/router/home.route");
 
 const decentralization = require("./server/middlewares/auth.mdw"); // phân quyền
 
-
 const PORT = process.env.PORT || 4000;
-const buildPath = path.join(__dirname, '..', 'build');
+
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("combined"));
 }
-app.use(express.static(buildPath));
+
 app.use(cors());
 app.use(bodyParser.json({ limit: "500mb" }));
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
@@ -41,7 +41,7 @@ app.use("/api/users", decentralization, USERS);
 app.use("/api/categorygroup", decentralization, CATEGORYGROUP);
 app.use("/api/category", decentralization, CATEGORY);
 app.use("/api/product", decentralization, PRODUCT);
-
+app.use("/api/coursesToken", decentralization, COURSESTOKEN);
 app.use("/api/courses", COURSES);
 
 app.use("/api/auth", AUTH);
@@ -86,5 +86,6 @@ app.use(function (err, req, res, next) {
 app.listen(PORT, function () {
   console.log(`Server is running on Port: http://localhost:${PORT}`);
 });
+require("./ws");
 
 module.exports = app;

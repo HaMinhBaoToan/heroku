@@ -7,6 +7,8 @@ import {
   ExclamationCircleOutlined
 } from "@ant-design/icons";
 
+import Serivces from "../../../../services/serivces"
+
 import { Table, Button, notification, Input, Row, Col, Popover, Modal, Tag } from "antd";
 import Icon, { IconCustom } from "../../../../components/Icon";
 
@@ -248,7 +250,7 @@ const Teacher = () => {
     values.Created_at = dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
 
     axios
-      .post("/api/users/teacher", values, {
+      .post(`${Serivces().API_SERVERPORT}/api/users/teacher`, values, {
         headers: {
           "x-access-token": localparseJson(
             localStorage.getItem("AcademyOnline_Token")
@@ -280,7 +282,7 @@ const Teacher = () => {
       <Row>
         <Col span={12}>
           <Input
-            placeholder="Mã sản phẩm, tên sản phẩm"
+            placeholder="Tên giảng viên"
             onChange={(e) => txt_Changed(e)}
             size="large"
             prefix={

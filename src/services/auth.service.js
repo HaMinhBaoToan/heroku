@@ -1,7 +1,8 @@
 import axios from "axios";
+import Serivces from "./serivces"
 
 export default function AuthService() {
-  const API_auth = "/api/auth";
+  const API_auth = `${Serivces().API_SERVERPORT}/api/auth`;
 
   const register = (velues) => {
     return axios.post(`${API_auth}/register`, velues);

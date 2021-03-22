@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from "react";
-import { message, Form, Input } from "antd";
+import React, { useEffect, useContext, useState } from "react";
+import { message, Form, Input, Image } from "antd";
 import { AppContext } from "../../../utils/AppContext";
 
 import AuthService from "../../../services/auth.service";
@@ -7,7 +7,15 @@ import { localparseJson, parseAccessToken_res } from "../../../utils/utils";
 
 const ChangeProfileUser = ({ setUserEmail }) => {
   const [form] = Form.useForm();
-  const { userid, setnameUser, saveToken } = useContext(AppContext);
+  const [imageBase64, setimageBase64] = useState();
+
+  const {
+    userid,
+    setnameUser,
+    saveToken,
+    setimageUser,
+    imageUser,
+  } = useContext(AppContext);
 
   useEffect(() => {
     AuthService()
@@ -33,6 +41,8 @@ const ChangeProfileUser = ({ setUserEmail }) => {
     },
   };
   const onFinish = (values) => {
+   // console.log(values);
+    setimageUser(values.Image)
     AuthService()
       .editProfile({
         userId: userid,
@@ -71,6 +81,31 @@ const ChangeProfileUser = ({ setUserEmail }) => {
           onFinish={onFinish}
           scrollToFirstError
         >
+          <Form.Item className="text-center">
+            <Image width={200} src={imageBase64 ? imageBase64 : imageUser} />
+          </Form.Item>
+          <Form.Item className="text-center">
+            <input
+              className="inputFile"
+              type="file"
+              accept="image/jpeg"
+              onChange={(e) => {
+                var reader = new FileReader();
+                reader.readAsDataURL(e.target.files[0]);
+                reader.onloadend = function (event) {
+                  var base64Data = event.target.result;
+                  setimageBase64(base64Data);
+                  form.setFieldsValue({
+                    Image: base64Data,
+                  });
+                };
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item name="Image" style={{ display: "none" }}>
+            <Input type={"hidden"} />
+          </Form.Item>
           <Form.Item
             name="DislayName"
             label={<span>Họ Và Tên</span>}
@@ -100,6 +135,7 @@ const ChangeProfileUser = ({ setUserEmail }) => {
           >
             <Input className="form-control" />
           </Form.Item>
+
           <Form.Item
           // wrapperCol={{
           //   xs: { span: 24, offset: 0 },

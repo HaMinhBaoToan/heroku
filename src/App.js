@@ -8,7 +8,7 @@ import {
 
 import "antd/dist/antd.css";
 import "./assets/global.scss";
-import 'antd-button-color/dist/css/style.css';
+import "antd-button-color/dist/css/style.css";
 import AppRoute from "./AppRoute";
 
 //page
@@ -41,7 +41,7 @@ const App = () => {
   const [imageUser, setimageUser] = useState(undefined);
 
   const [profile, setProfile] = useState(undefined);
-  const [userid, setUserid] = useState(0);
+  const [userid, setUserid] = useState(undefined);
   const [userJobId, setUserJobId] = useState(0);
 
   const [checkOTPConfim, setCheckOTPConfim] = useState(undefined);
@@ -58,7 +58,7 @@ const App = () => {
     setCheckOTPConfim();
     setUserJobId(0);
     AuthService().logout();
-    setUserid(0);
+    setUserid(undefined);
   };
 
   useEffect(() => {
@@ -119,21 +119,21 @@ const App = () => {
               exact
             />
             <AppRoute
-              path="/profile"
+              path={["/profile", "/profile/:profileTitlle"]}
               layout={Default}
               component={Profile}
               exact
             />
 
             <AppRoute
-              path="courses/:CategoryGroup/:CategoryId"
+              path="/courses/:CategoryGroup/:CategoryId"
               layout={Default}
               component={CoursesDetail}
               exact
             />
 
             <AppRoute
-              path= {["/courses", "/courses/:CategoryGroup" ] }
+              path={["/courses", "/courses/:CategoryGroup"]}
               layout={Default}
               component={Category}
               exact
@@ -227,7 +227,7 @@ const App = () => {
             />
 
             <AppRoute
-              path={["/courses", "/courses/:CategoryGroup" ] }
+              path={["/courses", "/courses/:CategoryGroup"]}
               layout={Default}
               component={Category}
               exact

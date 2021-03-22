@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../utils/AppContext";
-import AuthService from "../../../services/auth.service";
 import UserService from "../../../services/user.service";
+import CoursesList from "../../../containers/Courses/CoursesList/CoursesList"
 
 const FavorCourse = () => {
   const { userid } = useContext(AppContext);
-  const [favoriteCategory, setFavoriteCategory] = useState("");
+  const [favoriteCategory, setFavoriteCategory] = useState([]);
   useEffect(() => {
     UserService()
       .getAllFavoriteCategory(userid)
       .then((data) => {
-        debugger;
         if (data.data === false) {
-          setFavoriteCategory("");
+          setFavoriteCategory([]);
         } else {
           setFavoriteCategory(data.data);
+          console.log(data.data);
         }
       });
   }, []);
@@ -26,10 +26,14 @@ const FavorCourse = () => {
       </div>
       <div className="courses-filter">
         <div className="clearfix">
-          {favoriteCategory === "" ? (
+          {favoriteCategory.length <= 0 ? (
             <p className="mt-3 text-center">Không có khóa học yêu thích nào</p>
           ) : (
-            <div>Danh sách khóa học</div>
+            <div className="row" >
+              <div className="col-lg-10 col-md-12 col-sm-8" style={{margin:'0px auto'}}>
+                <CoursesList userid = { userid } categories = {favoriteCategory} />
+              </div>
+            </div>
           )}
         </div>
       </div>
