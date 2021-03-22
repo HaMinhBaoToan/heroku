@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
-// var path = require("path");
+ var path = require("path");
 // var fs = require("fs");
 
 
@@ -21,11 +21,11 @@ const HOME = require("./server/router/home.route");
 const decentralization = require("./server/middlewares/auth.mdw"); // phân quyền
 
 const PORT = process.env.PORT || 4000;
-
+const buildPath = path.join(__dirname, '..', 'build');
 if (process.env.NODE_ENV !== "test") {
   app.use(morgan("combined"));
 }
-
+app.use(express.static(buildPath));
 app.use(cors());
 app.use(bodyParser.json({ limit: "500mb" }));
 app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
