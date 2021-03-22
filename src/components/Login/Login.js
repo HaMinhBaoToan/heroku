@@ -64,6 +64,7 @@ const Login = () => {
               ws.send(parseAccessToken_res(res.data).UsersId);
             };
             ws.onmessage = function (e) {
+              console.log(e)
               if (e.data) {
                 var c = JSON.parse(e.data);
                 notification["warning"]({
@@ -125,6 +126,7 @@ const Login = () => {
               ws.send(parseAccessToken_res(res.data).UsersId);
             };
             ws.onmessage = function (e) {
+              console.log(e)
               if (e.data) {
                 var c = JSON.parse(e.data);
                 notification["warning"]({
